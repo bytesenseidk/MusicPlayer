@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MusicPlayer</string>
+    <string name="back_to_menu">Back to menu</string>
+    <string name="play_previous_song">Play previous song</string>
+    <string name="rewind_song">Rewind song</string>
+    <string name="pause_song">Pause song</string>
+    <string name="forward_song">Forward song</string>
+    <string name="play_next_song">Play next song</string>
+    <string name="song_progress">0</string>
+</resources>
