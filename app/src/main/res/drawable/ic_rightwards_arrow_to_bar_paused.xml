@@ -8,11 +8,11 @@
       android:strokeWidth="1"
       android:fillColor="#434343"
       android:fillType="evenOdd"
-      android:strokeColor="#00000000"/>
+      android:strokeColor="@color/neon_green"/>
   <path
       android:pathData="M3.613,15.495C3.031,16.076 1.51,16.395 1.51,14.494L1.51,1.506C1.51,-0.333 3.031,-0.076 3.613,0.506L10.057,6.948C10.637,7.529 10.637,8.47 10.057,9.052L3.613,15.495L3.613,15.495Z"
       android:strokeWidth="1"
       android:fillColor="#434343"
       android:fillType="evenOdd"
-      android:strokeColor="#00000000"/>
+      android:strokeColor="@color/neon_green"/>
 </vector>
