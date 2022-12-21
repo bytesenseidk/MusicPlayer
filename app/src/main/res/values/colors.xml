@@ -12,4 +12,5 @@
     <color name="outline_black">#303030</color>
     <color name="easy_white">#F8F5FA</color>
     <color name="neon_green">#39ff14</color>
+    <color name="neon_red">#FF3131</color>
 </resources>

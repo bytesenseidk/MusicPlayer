@@ -1,7 +1,6 @@
 package lars.rosenkilde.musicplayer
 
 import android.os.Bundle
-import android.content.Intent
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import lars.rosenkilde.musicplayer.databinding.ActivityPlayerPlayingBinding
