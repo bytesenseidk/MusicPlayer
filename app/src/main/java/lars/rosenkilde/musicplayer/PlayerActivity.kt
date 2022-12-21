@@ -7,26 +7,27 @@ import androidx.appcompat.app.AppCompatActivity
 import lars.rosenkilde.musicplayer.databinding.ActivityPlayerPlayingBinding
 
 
-class PlayingActivity : AppCompatActivity() {
+class PlayerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlayerPlayingBinding
-    private lateinit var intentPlaying: Intent
-    private lateinit var intentPaused: Intent
 
     private var mMediaPlayer: MediaPlayer? = null
     private val dummySong = R.raw.dummysong
+    private var playerState = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerPlayingBinding.inflate(layoutInflater)
         title = "Player"
-        intentPlaying = Intent(this, PlayingActivity::class.java)
-        intentPaused = Intent(this, PausedActivity::class.java)
         setContentView(binding.root)
 
-        playMedia()
-
-        binding.pauseButton.setOnClickListener {
-            startActivity(intentPaused)
+        binding.playButton.setOnClickListener {
+            if (!playerState) {
+                binding.playButton.isSelected = true
+                playMedia()
+            } else {
+                binding.playButton.isSelected = false
+                pauseMedia()
+            }
         }
     }
 
@@ -40,6 +41,7 @@ class PlayingActivity : AppCompatActivity() {
 
     private fun playMedia() {
         println("Playing...")
+        playerState = true
         if (mMediaPlayer == null) {
             mMediaPlayer = MediaPlayer.create(this, dummySong)
             mMediaPlayer!!.isLooping = true
@@ -49,10 +51,11 @@ class PlayingActivity : AppCompatActivity() {
 
     private fun pauseMedia() {
         println("Pausing...")
+        playerState = false
         if (mMediaPlayer?.isPlaying == true) mMediaPlayer?.pause()
     }
 
-    fun stop() {
+    private fun stop() {
         println("Stopping...")
         if (mMediaPlayer != null) {
             mMediaPlayer!!.stop()

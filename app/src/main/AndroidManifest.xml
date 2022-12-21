@@ -32,8 +32,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".PlayingActivity" />
-        <activity android:name=".PausedActivity" />
+        <activity android:name=".PlayerActivity" />
     </application>
 
 </manifest>

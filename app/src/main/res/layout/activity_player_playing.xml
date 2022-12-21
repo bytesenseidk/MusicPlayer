@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".PlayingActivity">
+    tools:context=".PlayerActivity">
 
     <LinearLayout
         android:id="@+id/background"
@@ -83,7 +83,7 @@
         android:background="@drawable/layout_btn_invisible"
         app:layout_constraintBottom_toBottomOf="@id/player_menu"
         app:layout_constraintStart_toEndOf="@id/previous_button"
-        app:layout_constraintEnd_toStartOf="@id/pause_button"
+        app:layout_constraintEnd_toStartOf="@id/play_button"
         android:contentDescription="@string/rewind_song" />
 
 
@@ -95,7 +95,7 @@
         android:src="@drawable/ic_rewind_forward_playing"
         android:background="@drawable/layout_btn_invisible"
         app:layout_constraintBottom_toBottomOf="@id/player_menu"
-        app:layout_constraintStart_toEndOf="@id/pause_button"
+        app:layout_constraintStart_toEndOf="@id/play_button"
         app:layout_constraintEnd_toStartOf="@id/next_button"
         android:contentDescription="@string/forward_song" />
 
@@ -130,11 +130,11 @@
         app:layout_constraintEnd_toStartOf="@id/next_button" />
 
     <ImageButton
-        android:id="@+id/pause_button"
+        android:id="@+id/play_button"
         android:layout_width="75sp"
         android:layout_height="75sp"
         android:layout_marginBottom="10sp"
-        android:src="@drawable/ic_pause_playing"
+        android:src="@drawable/image_btn_changer"
         android:background="@drawable/layout_btn_visible"
         app:layout_constraintBottom_toBottomOf="@id/player_menu"
         app:layout_constraintStart_toEndOf="@id/previous_button"

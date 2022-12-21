@@ -8,14 +8,14 @@ import lars.rosenkilde.musicplayer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var intentPaused: Intent
+    private lateinit var intentPlayer: Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         title = "Player"
-        intentPaused = Intent(this, PausedActivity::class.java)
+        intentPlayer = Intent(this, PlayerActivity::class.java)
         setContentView(binding.root)
-        startActivity(intentPaused)
+        startActivity(intentPlayer)
     }
 }
