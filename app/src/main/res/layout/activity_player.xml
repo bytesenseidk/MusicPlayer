@@ -82,7 +82,7 @@
         android:src="@drawable/player_rewind"
         android:background="@drawable/layout_btn_bg_invisible"
         app:layout_constraintBottom_toBottomOf="@id/player_menu"
-        app:layout_constraintStart_toEndOf="@id/previous_button"
+        app:layout_constraintStart_toEndOf="@id/prev_button"
         app:layout_constraintEnd_toStartOf="@id/play_button"
         android:contentDescription="@string/rewind_song" />
 
@@ -100,16 +100,17 @@
         android:contentDescription="@string/forward_song" />
 
     <View
+        android:id="@+id/prev_button_bg"
         android:layout_width="85sp"
         android:layout_height="85sp"
         android:layout_marginBottom="6sp"
         android:layout_marginStart="20sp"
-        android:background="@drawable/layout_navbar_neon_green"
+        android:background="@drawable/layout_navbar_neon_red"
         app:layout_constraintBottom_toBottomOf="@id/player_menu"
         app:layout_constraintStart_toStartOf="@id/player_menu" />
 
     <ImageButton
-        android:id="@+id/previous_button"
+        android:id="@+id/prev_button"
         android:layout_width="75sp"
         android:layout_height="75sp"
         android:layout_marginBottom="10sp"
@@ -121,12 +122,13 @@
         android:contentDescription="@string/play_previous_song" />
 
     <View
+        android:id="@+id/play_button_bg"
         android:layout_width="85sp"
         android:layout_height="85sp"
         android:layout_marginBottom="6sp"
-        android:background="@drawable/layout_navbar_neon_green"
+        android:background="@drawable/layout_navbar_neon_red"
         app:layout_constraintBottom_toBottomOf="@id/player_menu"
-        app:layout_constraintStart_toEndOf="@id/previous_button"
+        app:layout_constraintStart_toEndOf="@id/prev_button"
         app:layout_constraintEnd_toStartOf="@id/next_button" />
 
     <ImageButton
@@ -137,16 +139,17 @@
         android:src="@drawable/layout_anim_img_play"
         android:background="@drawable/layout_btn_bg_visible"
         app:layout_constraintBottom_toBottomOf="@id/player_menu"
-        app:layout_constraintStart_toEndOf="@id/previous_button"
+        app:layout_constraintStart_toEndOf="@id/prev_button"
         app:layout_constraintEnd_toStartOf="@id/next_button"
         android:contentDescription="@string/pause_song" />
 
     <View
+        android:id="@+id/next_button_bg"
         android:layout_width="85sp"
         android:layout_height="85sp"
         android:layout_marginBottom="6sp"
         android:layout_marginEnd="20sp"
-        android:background="@drawable/layout_navbar_neon_green"
+        android:background="@drawable/layout_navbar_neon_red"
         app:layout_constraintBottom_toBottomOf="@id/player_menu"
         app:layout_constraintEnd_toEndOf="@id/player_menu" />
 

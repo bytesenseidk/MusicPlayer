@@ -3,6 +3,7 @@ package lars.rosenkilde.musicplayer
 import android.os.Bundle
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import lars.rosenkilde.musicplayer.databinding.ActivityPlayerBinding
 
 
@@ -22,9 +23,15 @@ class PlayerActivity : AppCompatActivity() {
         binding.playButton.setOnClickListener {
             if (!playerState) {
                 binding.playButton.isSelected = true
+                binding.playButtonBg.background = ContextCompat.getDrawable(this, R.drawable.layout_navbar_neon_green)
+                binding.nextButtonBg.background = ContextCompat.getDrawable(this, R.drawable.layout_navbar_neon_green)
+                binding.prevButtonBg.background = ContextCompat.getDrawable(this, R.drawable.layout_navbar_neon_green)
                 playMedia()
             } else {
                 binding.playButton.isSelected = false
+                binding.playButtonBg.background = ContextCompat.getDrawable(this, R.drawable.layout_navbar_neon_red)
+                binding.nextButtonBg.background = ContextCompat.getDrawable(this, R.drawable.layout_navbar_neon_red)
+                binding.prevButtonBg.background = ContextCompat.getDrawable(this, R.drawable.layout_navbar_neon_red)
                 pauseMedia()
             }
         }
