@@ -3,11 +3,11 @@ package lars.rosenkilde.musicplayer
 import android.os.Bundle
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
-import lars.rosenkilde.musicplayer.databinding.ActivityPlayerPlayingBinding
+import lars.rosenkilde.musicplayer.databinding.ActivityPlayerBinding
 
 
 class PlayerActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityPlayerPlayingBinding
+    private lateinit var binding: ActivityPlayerBinding
 
     private var mMediaPlayer: MediaPlayer? = null
     private val dummySong = R.raw.dummysong
@@ -15,7 +15,7 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPlayerPlayingBinding.inflate(layoutInflater)
+        binding = ActivityPlayerBinding.inflate(layoutInflater)
         title = "Player"
         setContentView(binding.root)
 
