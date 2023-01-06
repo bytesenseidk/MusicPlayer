@@ -45,8 +45,18 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
+    private fun testFunc() {
+        val songname = MetaDataExtractor().songPath
+        if (!playerState) {
+            binding.songTitle.text = "Playing"
+        } else {
+            binding.songTitle.text = "Paused"
+        }
+
+    }
+
     private fun playMedia() {
-        println("Playing...")
+        testFunc()
         playerState = true
         if (mMediaPlayer == null) {
             mMediaPlayer = MediaPlayer.create(this, dummySong)
@@ -56,13 +66,12 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun pauseMedia() {
-        println("Pausing...")
+        testFunc()
         playerState = false
         if (mMediaPlayer?.isPlaying == true) mMediaPlayer?.pause()
     }
 
     private fun stop() {
-        println("Stopping...")
         if (mMediaPlayer != null) {
             mMediaPlayer!!.stop()
             mMediaPlayer!!.release()

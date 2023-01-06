@@ -20,6 +20,18 @@
         android:layout_height="50sp"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <TextView
+        android:id="@+id/songTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Song Name Here!"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/nav_menu"
+        app:layout_constraintStart_toStartOf="@id/nav_menu"
+        app:layout_constraintTop_toTopOf="@id/nav_menu"
+        app:layout_constraintBottom_toBottomOf="@id/nav_menu"/>
+
     <ImageButton
         android:layout_width="50sp"
         android:layout_height="50sp"
