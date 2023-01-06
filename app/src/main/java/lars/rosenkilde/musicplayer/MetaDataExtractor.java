@@ -7,7 +7,7 @@ public class MetaDataExtractor {
     URL songPath = MetaDataExtractor.class.getResource("dummysong.mp3");
     MediaMetadataRetriever mmr = new MediaMetadataRetriever();
 
-    String albumName = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
-    String testString = "From Java!";
+    String albumName = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+    String albumArtist = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
 }
 

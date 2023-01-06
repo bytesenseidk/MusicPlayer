@@ -46,13 +46,12 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun testFunc() {
-        val songname = MetaDataExtractor().testString
-        if (!playerState) {
-            binding.songTitle.text = songname
-        } else {
-            binding.songTitle.text = "Paused"
-        }
+        val mData = MetaDataExtractor()
+        val artist = mData.albumArtist ?: "Unknown Artist"
+        val album = mData.albumName ?: "Unknown Album"
 
+        binding.songTitle.text = artist
+        binding.songAlbum.text = album
     }
 
     private fun playMedia() {
