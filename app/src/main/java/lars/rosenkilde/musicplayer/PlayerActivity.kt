@@ -45,29 +45,32 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
-    private fun testFunc() {
-        val mData = MetaDataExtractor()
-        val artist = mData.albumArtist ?: "Unknown Artist"
-        val album = mData.albumName ?: "Unknown Album"
-
-        binding.songTitle.text = artist
-        binding.songAlbum.text = album
-    }
-
     private fun playMedia() {
-        testFunc()
         playerState = true
         if (mMediaPlayer == null) {
             mMediaPlayer = MediaPlayer.create(this, dummySong)
             mMediaPlayer!!.isLooping = true
             mMediaPlayer!!.start()
+            songProgress()
         } else mMediaPlayer!!.start()
     }
 
     private fun pauseMedia() {
-        testFunc()
         playerState = false
         if (mMediaPlayer?.isPlaying == true) mMediaPlayer?.pause()
+    }
+
+    private fun songProgress() {
+        //val mData = MetaDataExtractor()
+        val artist = /*mData.albumArtist ?:*/ "Unknown Artist"
+        val album = /*mData.albumName ?:*/ "Unknown Album"
+        val songDur = "0 / " + mMediaPlayer!!.duration
+
+        binding.songTitle.text = artist
+        binding.songAlbum.text = album
+        binding.progressBar.progress = 0
+        binding.progressBar.max = mMediaPlayer!!.duration
+        binding.songProgress.text = songDur
     }
 
     private fun stop() {

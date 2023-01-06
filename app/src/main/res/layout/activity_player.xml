@@ -55,8 +55,8 @@
         app:layout_constraintStart_toStartOf="@id/nav_menu"
         android:contentDescription="@string/back_to_menu" />
 
-    <ProgressBar
-        android:id="@+id/progressBarHorizontal"
+    <!--ProgressBar
+        android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,6 +70,23 @@
         android:progressTint="@color/sec_black"
         app:layout_constraintBottom_toTopOf="@id/player_menu"
         app:layout_constraintStart_toStartOf="@id/player_menu"
+        app:layout_constraintEnd_toEndOf="@id/player_menu"/-->
+
+    <SeekBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp"
+        android:indeterminate="false"
+        android:max="100"
+        android:minHeight="25dp"
+        android:progress="25"
+        android:progressTint="@color/neon_red"
+        android:thumbTint="@color/neon_red"
+        android:progressBackgroundTint="@color/neon_red"
+        app:layout_constraintBottom_toTopOf="@id/player_menu"
+        app:layout_constraintStart_toStartOf="@id/player_menu"
         app:layout_constraintEnd_toEndOf="@id/player_menu"/>
 
     <TextView
@@ -81,7 +98,7 @@
         android:textColor="@color/easy_white"
         style="bold"
         app:layout_constraintBottom_toTopOf="@id/player_menu"
-        app:layout_constraintTop_toTopOf="@id/progressBarHorizontal"
+        app:layout_constraintTop_toTopOf="@id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/song_progress"/>
