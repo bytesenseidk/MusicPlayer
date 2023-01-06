@@ -46,9 +46,9 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun testFunc() {
-        val songname = MetaDataExtractor().songPath
+        val songname = MetaDataExtractor().testString
         if (!playerState) {
-            binding.songTitle.text = "Playing"
+            binding.songTitle.text = songname
         } else {
             binding.songTitle.text = "Paused"
         }
