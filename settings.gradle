@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "MusicPlayer"
+rootProject.name = "KotlinMusic"
 include ':app'
