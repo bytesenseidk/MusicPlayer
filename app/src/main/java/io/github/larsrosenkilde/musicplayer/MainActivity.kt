@@ -13,8 +13,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import io.github.larsrosenkilde.musicplayer.ui.theme.MusicPlayerTheme
 
 class MainActivity : ComponentActivity() {
+    private var mPlayer: MusicPlayer? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             MusicPlayerTheme {
                 // A surface container using the 'background' color from the theme
