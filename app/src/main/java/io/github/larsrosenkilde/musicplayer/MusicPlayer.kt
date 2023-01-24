@@ -3,7 +3,7 @@ package io.github.larsrosenkilde.musicplayer
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
-import io.github.larsrosenkilde.musicplayer.services.Radio
+import io.github.larsrosenkilde.musicplayer.services.radio.Radio
 import io.github.larsrosenkilde.musicplayer.services.SettingsManager
 
 interface MusicHooks {

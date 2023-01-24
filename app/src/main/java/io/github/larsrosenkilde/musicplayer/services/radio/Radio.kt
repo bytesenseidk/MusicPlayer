@@ -1,10 +1,7 @@
-package io.github.larsrosenkilde.musicplayer.services
+package io.github.larsrosenkilde.musicplayer.services.radio
 
-import android.media.metrics.Event
 import io.github.larsrosenkilde.musicplayer.MusicHooks
 import io.github.larsrosenkilde.musicplayer.MusicPlayer
-import io.github.larsrosenkilde.musicplayer.services.radio.RadioPlayer
-import io.github.larsrosenkilde.musicplayer.utils.ConcurrentList
 import io.github.larsrosenkilde.musicplayer.utils.Eventer
 
 enum class RadioEvents {
@@ -26,11 +23,29 @@ enum class RadioEvents {
 
 class Radio(private val mplayer: MusicPlayer): MusicHooks {
     val onUpdate = Eventer<RadioEvents>()
-
+    val queue = RadioQueue(mplayer)
     private var player: RadioPlayer? = null
 
     val hasPlayer: Boolean
         get() = player?.usable ?: false
+    val isPlaying: Boolean
+        get() = player?.isPlaying ?: false
+    val currentPlaybackPosition: PlaybackPosition?
+        get() = player?.playbackPosition
+
+    val onPlaybackPositionUpdate = Eventer<PlaybackPosition>()
+
+    /*
+    init {
+        nativeReceiver.start()
+    }
+
+    fun destroy() {
+        stop()
+        notification.destroy()
+        nativeReceiver.destroy()
+    }
+     */
 
     data class PlayOptions(
         val index: Int = 0,
@@ -42,6 +57,17 @@ class Radio(private val mplayer: MusicPlayer): MusicHooks {
         stopCurrentSong()
         if (!queue.hasSongAt(options.index)) {
             queue.currentSongIndex = -1
+        }
+    }
+
+    private fun stopCurrentSong() {
+        player?.let {
+            player = null
+            it.setOnPlaybackPositionUpdateListener {}
+            it.setVolume(RadioPlayer.MIN_VOLUME) { _ ->
+                it.stop()
+                onUpdate.dispatch(RadioEvents.StopPlaying)
+            }
         }
     }
 }
