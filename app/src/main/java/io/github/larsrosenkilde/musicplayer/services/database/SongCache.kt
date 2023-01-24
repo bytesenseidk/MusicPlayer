@@ -6,6 +6,7 @@ import io.github.larsrosenkilde.musicplayer.services.groove.Song
 import io.github.larsrosenkilde.musicplayer.utils.getIntOrNull
 import io.github.larsrosenkilde.musicplayer.utils.getStringOrNull
 import org.json.JSONObject
+import org.w3c.dom.Attr
 import java.nio.file.Paths
 
 class SongCache(val musicPlayer: MusicPlayer) {
@@ -53,6 +54,20 @@ class SongCache(val musicPlayer: MusicPlayer) {
     )
 
     fun read(): Map<Long, Attributes> {
+        val content = adapter.read()
+        val output = mutableMapOf<Long, Attributes>()
+        val parsed = JSONObject(content)
+        for (x in parsed.keys()) {
+            output[x.toLong()] = Attributes.fromJSONObject(parsed.getJSONObject(x))
+        }
+        return output
+    }
 
+    fun update(value: Map<Long, Attributes>) {
+        val json = JSONObject()
+        value.forEach { (k, v) ->
+            json.put(k.toString(), v.toJSONObject())
+        }
+        adapter.overwrite(json.toString())
     }
 }
