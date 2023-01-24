@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import io.github.larsrosenkilde.musicplayer.services.Radio
+import io.github.larsrosenkilde.musicplayer.services.SettingsManager
 
 interface MusicHooks {
     fun onMusicReady() {}
@@ -14,7 +15,7 @@ interface MusicHooks {
 class MusicPlayer(application: Application): AndroidViewModel(application), MusicHooks {
     val radio = Radio(this)
     //val groove = GrooveManager(this)
-
+    val settings = SettingsManager(this)
     val applicationContext: Context
         get() = getApplication<Application>().applicationContext
 

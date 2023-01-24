@@ -3,6 +3,7 @@ package io.github.larsrosenkilde.musicplayer.services
 import android.media.metrics.Event
 import io.github.larsrosenkilde.musicplayer.MusicHooks
 import io.github.larsrosenkilde.musicplayer.MusicPlayer
+import io.github.larsrosenkilde.musicplayer.services.radio.RadioPlayer
 import io.github.larsrosenkilde.musicplayer.utils.ConcurrentList
 import io.github.larsrosenkilde.musicplayer.utils.Eventer
 
@@ -36,4 +37,11 @@ class Radio(private val mplayer: MusicPlayer): MusicHooks {
         val autostart: Boolean = true,
         val startPosition: Int? = null
     )
+
+    fun play(options: PlayOptions) {
+        stopCurrentSong()
+        if (!queue.hasSongAt(options.index)) {
+            queue.currentSongIndex = -1
+        }
+    }
 }
