@@ -1,6 +1,7 @@
 package io.github.larsrosenkilde.musicplayer
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import io.github.larsrosenkilde.musicplayer.services.Radio
 
@@ -12,11 +13,13 @@ interface MusicHooks {
 
 class MusicPlayer(application: Application): AndroidViewModel(application), MusicHooks {
     val radio = Radio(this)
-    val groove = GrooveManager(this)
+    //val groove = GrooveManager(this)
+
+    val applicationContext: Context
+        get() = getApplication<Application>().applicationContext
 
     private var isReady = false
-
-    private var hooks = listOf(this, radio, groove)
+    private var hooks = listOf(this, radio, /*groove*/)
 
     fun ready() {
         if (isReady) return
