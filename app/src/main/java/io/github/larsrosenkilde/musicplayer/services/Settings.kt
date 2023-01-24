@@ -8,11 +8,20 @@ object SettingsKeys {
     const val identifier = "settings"
     const val fade_playback = "fade_playback"
     const val fade_playback_duration = "fade_playback_duration"
+    const val play_on_headphones_connect = "play_on_headphones_connect"
+    const val pause_on_headphones_disconnect = "pause_on_headphones_disconnect"
 }
+
+data class SettingsData(
+    val playOnHeadphonesConnect: Boolean,
+    val pauseOnHeadphonesDisconnect: Boolean
+)
 
 object SettingsDataDefaults {
     const val fadePlayback = false
     const val fadePlaybackDuration = 1f
+    const val playOnHeadphonesConnect = false
+    const val pauseOnHeadphonesDisconnect = false
 }
 
 class SettingsManager(private val musicPlayer: MusicPlayer) {
@@ -27,6 +36,18 @@ class SettingsManager(private val musicPlayer: MusicPlayer) {
         getSharedPreference().getFloat(
             SettingsKeys.fade_playback_duration,
             SettingsDataDefaults.fadePlaybackDuration
+        )
+
+    fun getPlayOnHeadphonesConnect() =
+        getSharedPreference().getBoolean(
+            SettingsKeys.play_on_headphones_connect,
+            SettingsDataDefaults.playOnHeadphonesConnect
+        )
+
+    fun getPauseOnHeadphonesDisconnect() =
+        getSharedPreference().getBoolean(
+            SettingsKeys.pause_on_headphones_disconnect,
+            SettingsDataDefaults.pauseOnHeadphonesDisconnect
         )
 
     private fun getSharedPreference() =

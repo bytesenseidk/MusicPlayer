@@ -24,8 +24,9 @@ enum class RadioEvents {
 class Radio(private val mplayer: MusicPlayer): MusicHooks {
     val onUpdate = Eventer<RadioEvents>()
     val queue = RadioQueue(mplayer)
-    private var player: RadioPlayer? = null
 
+    private var player: RadioPlayer? = null
+    private val nativeReceiver = RadioNativeReceiver(mplayer)
     val hasPlayer: Boolean
         get() = player?.usable ?: false
     val isPlaying: Boolean
@@ -57,8 +58,18 @@ class Radio(private val mplayer: MusicPlayer): MusicHooks {
         stopCurrentSong()
         if (!queue.hasSongAt(options.index)) {
             queue.currentSongIndex = -1
+            return
+        }
+        val song = queue.getSongAt(options.index)!!
+        queue.currentSongIndex = options.index
+        try {
+            player = RadioPlayer(mplayer, song.uri).apply {
+
+            }
         }
     }
+
+    fun resume() = start(1)
 
     private fun stopCurrentSong() {
         player?.let {

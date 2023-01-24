@@ -3,8 +3,10 @@ package io.github.larsrosenkilde.musicplayer
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
+import io.github.larsrosenkilde.musicplayer.services.PermissionsManager
 import io.github.larsrosenkilde.musicplayer.services.radio.Radio
 import io.github.larsrosenkilde.musicplayer.services.SettingsManager
+import io.github.larsrosenkilde.musicplayer.services.groove.GrooveManager
 
 interface MusicHooks {
     fun onMusicReady() {}
@@ -16,6 +18,8 @@ class MusicPlayer(application: Application): AndroidViewModel(application), Musi
     val radio = Radio(this)
     //val groove = GrooveManager(this)
     val settings = SettingsManager(this)
+    val permission = PermissionsManager(this)
+    val groove = GrooveManager(this)
     val applicationContext: Context
         get() = getApplication<Application>().applicationContext
 
