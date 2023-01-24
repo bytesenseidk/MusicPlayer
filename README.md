@@ -9,7 +9,7 @@ Kotlin project aimed for me to learn Kotlin & Jetpack Compose
 
 # Version History
 - 0.1:
-  * Initial build
+  * Initial build 
 - 0.2:
   * Material-3 Integration 
    
