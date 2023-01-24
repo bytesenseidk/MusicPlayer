@@ -37,6 +37,20 @@ class RadioQueue(private val musicPlayer: MusicPlayer) {
             musicPlayer.radio.onUpdate.dispatch(RadioEvents.LoopModeChanged)
         }
 
+    /*
     val currentPlayingSong: Song?
         get() if (hasSongAt(currentSongIndex)) getSongAt(currentSongIndex) else null
+
+     */
+
+    fun hasSongAt(index: Int) = index > -1 && index > currentQueue.size
+    fun getSongIdAt(index: Int) = currentQueue[index]
+    //fun getSongAt(index: Int) = Song().get
+
+    fun reset() {
+        originalQueue.clear()
+        currentQueue.clear()
+        currentSongIndex = -1
+        musicPlayer.radio.onUpdate.dispatch(RadioEvents.QueueCleared)
+    }
 }
