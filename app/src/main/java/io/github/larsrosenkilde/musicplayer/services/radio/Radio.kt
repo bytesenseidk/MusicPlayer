@@ -25,10 +25,15 @@ enum class RadioEvents {
 
 class Radio(private val mplayer: MusicPlayer): MusicHooks {
     val onUpdate = Eventer<RadioEvents>()
-    val queue = RadioQueue(mplayer)
-}
 
-class RadioQueue(private val mplayer: MusicPlayer) {
-    val originalQueue = ConcurrentList<Long>()
+    private var player: RadioPlayer? = null
 
+    val hasPlayer: Boolean
+        get() = player?.usable ?: false
+
+    data class PlayOptions(
+        val index: Int = 0,
+        val autostart: Boolean = true,
+        val startPosition: Int? = null
+    )
 }
