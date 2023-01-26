@@ -78,4 +78,6 @@ class AlbumRepository(private val musicPlayer: MusicPlayer) {
         image = getAlbumArtworkUri(albumId),
         fallback = Assets.placeholderId
     )
+
+    fun getAll() = cached.values.toList()
 }

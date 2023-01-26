@@ -36,4 +36,7 @@ class PlaylistRepository(private val musicPlayer: MusicPlayer) {
         isUpdating = false
         onUpdate.dispatch(null)
     }
+
+    fun getAll() = cached.values.toList()
+    fun getPlaylistWithId(id: String) = cached[id]
 }
