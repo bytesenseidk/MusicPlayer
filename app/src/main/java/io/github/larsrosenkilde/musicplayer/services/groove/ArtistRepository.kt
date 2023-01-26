@@ -7,6 +7,12 @@ import io.github.larsrosenkilde.musicplayer.ui.helpers.createHandyImageRequest
 import io.github.larsrosenkilde.musicplayer.utils.*
 import java.util.concurrent.ConcurrentHashMap
 
+enum class ArtistSortBy {
+    ARTIST_NAME,
+    TRACKS_COUNT,
+    ALBUMS_COUNT
+}
+
 class ArtistRepository(private val musicPlayer: MusicPlayer) {
     private val cached = ConcurrentHashMap<String, Artist>()
     var isUpdating = false
@@ -63,5 +69,19 @@ class ArtistRepository(private val musicPlayer: MusicPlayer) {
         fallback = Assets.placeholderId
     )
 
+    fun getAll() = cached.values.toList()
     fun getArtistFromName(artistName: String) = cached[artistName]
+
+    fun search(terms: String) = searcher.search(terms, getAll()).subListNonStrict(7)
+
+    companion object {
+        fun sort(artists: List<Artist>, by: ArtistSortBy, reversed: Boolean): List<Artist> {
+            val sorted = when (by) {
+                ArtistSortBy.ARTIST_NAME -> artists.sortedBy { it.name }
+                ArtistSortBy.TRACKS_COUNT -> artists.sortedBy { it.numberOfTracks }
+                ArtistSortBy.ALBUMS_COUNT -> artists.sortedBy { it.numberOfAlbums }
+            }
+            return if (reversed) sorted.reversed() else sorted
+        }
+    }
 }

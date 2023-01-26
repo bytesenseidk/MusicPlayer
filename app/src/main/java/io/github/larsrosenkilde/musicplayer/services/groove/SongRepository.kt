@@ -46,6 +46,9 @@ class SongRepository(private val musicPlayer: MusicPlayer) {
         musicPlayer.groove.genre.isUpdating = to
     }
 
+    fun getAll() = cached.values.toList()
+    private fun getAll(filter: (Song) -> Boolean) = getAll().filter(filter)
+
     companion object {
         fun sort(songs: List<Song>, by: SongSortBy, reversed: Boolean): List<Song> {
             val sorted = when(by) {

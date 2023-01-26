@@ -63,4 +63,6 @@ fun HomeView(context: ViewContext) {
     var currentPage by remember {
         mutableStateOf(context.musicPlayer.settings.getHomeLastTab())
     }
+    var showOptionsDropdown by remember { mutableStateOf(false) }
+    val data = remember { HomeViewData(context.musicPlayer) }
 }

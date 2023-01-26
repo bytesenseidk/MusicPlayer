@@ -19,12 +19,10 @@ interface MusicHooks {
 
 class MusicPlayer(application: Application): AndroidViewModel(application), MusicHooks {
     val radio = Radio(this)
-    //val groove = GrooveManager(this)
     val settings = SettingsManager(this)
     val permission = PermissionsManager(this)
     val groove = GrooveManager(this)
     val database = Database(this)
-
     val translator = Translator(this)
     val t: Translations get() = translator.t
 
@@ -38,6 +36,14 @@ class MusicPlayer(application: Application): AndroidViewModel(application), Musi
         if (isReady) return
         isReady = true
         notifyHooks { onMusicReady() }
+    }
+
+    fun pause() {
+        notifyHooks { onMusicPause() }
+    }
+
+    fun destroy() {
+        notifyHooks { onMusicDestroy() }
     }
 
     private fun notifyHooks(fn: MusicHooks.() -> Unit) {
