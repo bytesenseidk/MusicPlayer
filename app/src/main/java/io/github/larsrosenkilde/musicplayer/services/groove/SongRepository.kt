@@ -6,8 +6,8 @@ import java.util.concurrent.ConcurrentHashMap
 class SongRepository(private val musicPlayer: MusicPlayer) {
     private val cached = ConcurrentHashMap<Long, Song>()
     private val cachedAlbumArtist = ConcurrentHashMap<String, MutableSet<Long>>()
-    private var cachedGenres = ConcurrentHashMap<String, Genre>()
-    private var cachedPaths = ConcurrentHashMap<String, Long>()
+    internal var cachedGenres = ConcurrentHashMap<String, Genre>()
+    internal var cachedPaths = ConcurrentHashMap<String, Long>()
     var isUpdating = false
 
     fun getSongWithId(songId: Long) = cached[songId]
