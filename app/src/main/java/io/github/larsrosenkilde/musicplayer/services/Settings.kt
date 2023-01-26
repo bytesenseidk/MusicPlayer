@@ -10,6 +10,7 @@ object SettingsKeys {
     const val fade_playback_duration = "fade_playback_duration"
     const val play_on_headphones_connect = "play_on_headphones_connect"
     const val pause_on_headphones_disconnect = "pause_on_headphones_disconnect"
+    const val language = "language"
 }
 
 data class SettingsData(
@@ -49,6 +50,8 @@ class SettingsManager(private val musicPlayer: MusicPlayer) {
             SettingsKeys.pause_on_headphones_disconnect,
             SettingsDataDefaults.pauseOnHeadphonesDisconnect
         )
+
+    fun getLanguage() = getSharedPreference().getString(SettingsKeys.language, null)
 
     private fun getSharedPreference() =
         musicPlayer.applicationContext.getSharedPreferences(
