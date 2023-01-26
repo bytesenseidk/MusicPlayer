@@ -10,6 +10,7 @@ interface Translations {
     val albums: String
     val albumArtists: String
     val playlists: String
+    val settings: String
 
     companion object {
         val all = arrayOf<Translations>(English())

@@ -58,6 +58,15 @@ class HomeViewData(val musicPlayer: MusicPlayer) {
         playlistsSubscriber = musicPlayer.groove.playlist.onUpdate.subscribe { updatePlaylistsState() }
     }
 
+    fun dispose() {
+        songsSubscriber?.invoke()
+        artistsSubscriber?.invoke()
+        albumsSubscriber?.invoke()
+        albumArtistsSubscriber?.invoke()
+        genresSubscriber?.invoke()
+        playlistsSubscriber?.invoke()
+    }
+
     private fun updateAllStates() {
         updateSongsState()
         updateArtistsState()

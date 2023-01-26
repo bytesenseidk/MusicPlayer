@@ -17,7 +17,9 @@ object SettingsKeys {
     const val language = "language"
     const val home_tabs = "home_tabs"
     const val home_last_tab = "home_last_tab"
+    const val mini_player_extended_controls = "mini_player_extended_controls"
     const val home_page_bottom_bar_label_visibility = "home_page_bottom_bar_label_visibility"
+    const val require_audio_focus = "require_audio_focus"
 }
 
 data class SettingsData(
@@ -32,6 +34,8 @@ object SettingsDataDefaults {
     const val fadePlaybackDuration = 1f
     const val playOnHeadphonesConnect = false
     const val pauseOnHeadphonesDisconnect = false
+    const val miniPlayerExtendedControls = false
+    const val requireAudioFocus = true
     val homeTabs = setOf(
         HomePages.Songs,
         HomePages.Albums,
@@ -97,6 +101,18 @@ class SettingsManager(private val musicPlayer: MusicPlayer) {
 
     fun getHomeLastTab() =
         getSharedPreference().getEnum(SettingsKeys.home_last_tab, null) ?: HomePages.Songs
+
+    fun getMiniPlayerExtendedControls() =
+        getSharedPreference().getBoolean(
+            SettingsKeys.mini_player_extended_controls,
+            SettingsDataDefaults.miniPlayerExtendedControls
+        )
+
+    fun getRequiredAudioFocus() =
+        getSharedPreference().getBoolean(
+            SettingsKeys.require_audio_focus,
+            SettingsDataDefaults.requireAudioFocus
+        )
 
     private fun getSharedPreference() =
         musicPlayer.applicationContext.getSharedPreferences(

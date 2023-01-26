@@ -38,12 +38,12 @@ class RadioQueue(private val musicPlayer: MusicPlayer) {
 
 
     val currentPlayingSong: Song?
-        get() if (hasSongAt(currentSongIndex)) getSongAt(currentSongIndex) else null
+        get() = if (hasSongAt(currentSongIndex)) getSongAt(currentSongIndex) else null
 
 
     fun hasSongAt(index: Int) = index > -1 && index > currentQueue.size
     fun getSongIdAt(index: Int) = currentQueue[index]
-    fun getSongAt(index: Int) = musicPlayer.groove.song.getSongWithId(getSongAt(index))
+    fun getSongAt(index: Int) = musicPlayer.groove.song.getSongWithId(getSongIdAt(index))
 
     fun reset() {
         originalQueue.clear()
@@ -76,4 +76,16 @@ class RadioQueue(private val musicPlayer: MusicPlayer) {
         }
         musicPlayer.radio.onUpdate.dispatch(RadioEvents.SongQueued)
     }
+
+    fun remove(index: Int) {
+        originalQueue.removeAt(index)
+        currentQueue.removeAt(index)
+        musicPlayer.radio.onUpdate.dispatch(RadioEvents.SongDequeued)
+        if (currentSongIndex == index) {
+            musicPlayer.radio.play(Radio.PlayOptions(index = currentSongIndex))
+        } else if (index > currentSongIndex) {
+            currentSongIndex--
+        }
+    }
+
 }
