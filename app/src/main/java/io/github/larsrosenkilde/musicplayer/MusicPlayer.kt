@@ -7,6 +7,8 @@ import io.github.larsrosenkilde.musicplayer.services.PermissionsManager
 import io.github.larsrosenkilde.musicplayer.services.radio.Radio
 import io.github.larsrosenkilde.musicplayer.services.SettingsManager
 import io.github.larsrosenkilde.musicplayer.services.groove.GrooveManager
+import io.github.larsrosenkilde.musicplayer.services.i18n.Translations
+import io.github.larsrosenkilde.musicplayer.services.i18n.Translator
 
 interface MusicHooks {
     fun onMusicReady() {}
@@ -20,6 +22,10 @@ class MusicPlayer(application: Application): AndroidViewModel(application), Musi
     val settings = SettingsManager(this)
     val permission = PermissionsManager(this)
     val groove = GrooveManager(this)
+
+    val translator = Translator(this)
+    val t: Translations get() = translator.t
+
     val applicationContext: Context
         get() = getApplication<Application>().applicationContext
 

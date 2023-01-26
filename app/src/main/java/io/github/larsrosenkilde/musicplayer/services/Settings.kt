@@ -2,7 +2,11 @@ package io.github.larsrosenkilde.musicplayer.services
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import io.github.larsrosenkilde.musicplayer.MusicPlayer
+import io.github.larsrosenkilde.musicplayer.ui.view.HomePageBottomBarLabelVisibility
+import io.github.larsrosenkilde.musicplayer.ui.view.HomePages
+import io.github.larsrosenkilde.musicplayer.utils.Eventer
 
 object SettingsKeys {
     const val identifier = "settings"
@@ -10,11 +14,17 @@ object SettingsKeys {
     const val fade_playback_duration = "fade_playback_duration"
     const val play_on_headphones_connect = "play_on_headphones_connect"
     const val pause_on_headphones_disconnect = "pause_on_headphones_disconnect"
+    const val language = "language"
+    const val home_tabs = "home_tabs"
+    const val home_last_tab = "home_last_tab"
+    const val home_page_bottom_bar_label_visibility = "home_page_bottom_bar_label_visibility"
 }
 
 data class SettingsData(
     val playOnHeadphonesConnect: Boolean,
-    val pauseOnHeadphonesDisconnect: Boolean
+    val pauseOnHeadphonesDisconnect: Boolean,
+    val homeTabs: Set<HomePages>,
+    val homePageBottomBarLabelVisibility: HomePageBottomBarLabelVisibility
 )
 
 object SettingsDataDefaults {
@@ -22,9 +32,16 @@ object SettingsDataDefaults {
     const val fadePlaybackDuration = 1f
     const val playOnHeadphonesConnect = false
     const val pauseOnHeadphonesDisconnect = false
+    val homeTabs = setOf(
+        HomePages.Songs,
+        HomePages.Albums,
+        HomePages.Artists
+    )
+    val homePageBottomBarLabelVisibility = HomePageBottomBarLabelVisibility.ALWAYS_VISIBLE
 }
 
 class SettingsManager(private val musicPlayer: MusicPlayer) {
+    val onChange = Eventer<String>()
 
     fun getFadePlayback() =
         getSharedPreference().getBoolean(
@@ -49,6 +66,37 @@ class SettingsManager(private val musicPlayer: MusicPlayer) {
             SettingsKeys.pause_on_headphones_disconnect,
             SettingsDataDefaults.pauseOnHeadphonesDisconnect
         )
+
+    fun getLanguage() = getSharedPreference().getString(SettingsKeys.language, null)
+
+    fun getHomeTabs() = getSharedPreference()
+        .getString(SettingsKeys.home_tabs, null)
+        ?.split(",")
+        ?.mapNotNull { parsedEnumValue<HomePages>(it) }
+        ?.toSet()
+        ?: SettingsDataDefaults.homeTabs
+
+    fun setHomeTabs(tabs: Set<HomePages>) {
+        getSharedPreference().edit {
+            putString(SettingsKeys.home_tabs, tabs.joinToString(",") { it.name })
+        }
+        onChange.dispatch(SettingsKeys.home_tabs)
+    }
+
+    fun getHomePageBottomBarLabelVisibility() =
+        getSharedPreference()
+            .getEnum(SettingsKeys.home_page_bottom_bar_label_visibility, null)
+            ?: SettingsDataDefaults.homePageBottomBarLabelVisibility
+
+    fun setHomePageBottomBarLabelVisibility(value: HomePageBottomBarLabelVisibility) {
+        getSharedPreference().edit {
+            putEnum(SettingsKeys.home_page_bottom_bar_label_visibility, value)
+        }
+        onChange.dispatch(SettingsKeys.home_page_bottom_bar_label_visibility)
+    }
+
+    fun getHomeLastTab() =
+        getSharedPreference().getEnum(SettingsKeys.home_last_tab, null) ?: HomePages.Songs
 
     private fun getSharedPreference() =
         musicPlayer.applicationContext.getSharedPreferences(
