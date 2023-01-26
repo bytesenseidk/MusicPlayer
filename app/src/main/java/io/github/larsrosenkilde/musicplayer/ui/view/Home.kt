@@ -1,11 +1,13 @@
 package io.github.larsrosenkilde.musicplayer.ui.view
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import io.github.larsrosenkilde.musicplayer.ui.helpers.*
 import io.github.larsrosenkilde.musicplayer.ui.view.home.*
 import io.github.larsrosenkilde.musicplayer.services.i18n.*
@@ -47,3 +49,18 @@ enum class HomePages(
     )
 }
 
+enum class HomePageBottomBarLabelVisibility {
+    ALWAYS_VISIBLE,
+    VISIBLE_WHEN_ACTIVE,
+    INVISIBLE
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
+@Composable
+fun HomeView(context: ViewContext) {
+    val tabs = context.musicPlayer.settings.getHomeTabs().toList()
+    val labelVisibility = context.musicPlayer.settings.getHomePageBottomBarLabelVisibility()
+    var currentPage by remember {
+        mutableStateOf(context.musicPlayer.settings.getHomeLastTab())
+    }
+}
