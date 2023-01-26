@@ -128,6 +128,12 @@ class Radio(private val mplayer: MusicPlayer): MusicHooks {
         }
     }
 
+    fun jumpTo(index: Int) = play(PlayOptions(index = index))
+    fun jumpToPrevious() = jumpTo(queue.currentSongIndex - 1)
+    fun jumpToNext() = jumpTo(queue.currentSongIndex + 1)
+    fun canJumpToPrevious() = queue.hasSongAt(queue.currentSongIndex - 1)
+    fun canJumpToNext() = queue.hasSongAt(queue.currentSongIndex + 1)
+
     fun seek(position: Int) {
         player?.let {
             it.seek(position)
