@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import io.github.larsrosenkilde.musicplayer.services.PermissionsManager
 import io.github.larsrosenkilde.musicplayer.services.radio.Radio
 import io.github.larsrosenkilde.musicplayer.services.SettingsManager
+import io.github.larsrosenkilde.musicplayer.services.database.Database
 import io.github.larsrosenkilde.musicplayer.services.groove.GrooveManager
 import io.github.larsrosenkilde.musicplayer.services.i18n.Translations
 import io.github.larsrosenkilde.musicplayer.services.i18n.Translator
@@ -22,6 +23,7 @@ class MusicPlayer(application: Application): AndroidViewModel(application), Musi
     val settings = SettingsManager(this)
     val permission = PermissionsManager(this)
     val groove = GrooveManager(this)
+    val database = Database(this)
 
     val translator = Translator(this)
     val t: Translations get() = translator.t
