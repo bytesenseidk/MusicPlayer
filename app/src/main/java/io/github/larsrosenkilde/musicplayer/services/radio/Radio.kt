@@ -3,6 +3,7 @@ package io.github.larsrosenkilde.musicplayer.services.radio
 import io.github.larsrosenkilde.musicplayer.MusicHooks
 import io.github.larsrosenkilde.musicplayer.MusicPlayer
 import io.github.larsrosenkilde.musicplayer.utils.Eventer
+import kotlin.math.max
 
 enum class RadioEvents {
     StartPlaying,
@@ -29,6 +30,8 @@ class Radio(private val mplayer: MusicPlayer): MusicHooks {
     private val focus = RadioFocus(mplayer)
 
     private var player: RadioPlayer? = null
+    private var focusCounter = 0
+
     private val nativeReceiver = RadioNativeReceiver(mplayer)
     val hasPlayer: Boolean
         get() = player?.usable ?: false
@@ -113,6 +116,37 @@ class Radio(private val mplayer: MusicPlayer): MusicHooks {
         }
     }
 
+    fun pause() = pause {}
+    private fun pause(onFinish: () -> Unit) {
+        player?.let {
+            it.setVolume(RadioPlayer.MIN_VOLUME) { _ ->
+                it.pause()
+                abandonFocus()
+                onFinish()
+                onUpdate.dispatch(RadioEvents.PausePlaying)
+            }
+        }
+    }
+
+    fun seek(position: Int) {
+        player?.let {
+            it.seek(position)
+            onUpdate.dispatch(RadioEvents.SongSeeked)
+        }
+    }
+
+    fun duck() {
+        player?.let {
+            it.setVolume(RadioPlayer.DUCK_VOLUME) {}
+        }
+    }
+
+    fun restoreVolume() {
+        player?.let {
+            it.setVolume(RadioPlayer.MAX_VOLUME) {}
+        }
+    }
+
     private fun stopCurrentSong() {
         player?.let {
             player = null
@@ -150,5 +184,12 @@ class Radio(private val mplayer: MusicPlayer): MusicHooks {
             focusCounter++
         }
         return result
+    }
+
+    private fun abandonFocus() {
+        focusCounter = max(0, focusCounter - 1)
+        if (focusCounter == 0) {
+            focus.abandonFocus()
+        }
     }
 }

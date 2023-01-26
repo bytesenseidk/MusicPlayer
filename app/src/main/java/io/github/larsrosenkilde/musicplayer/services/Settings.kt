@@ -20,6 +20,7 @@ object SettingsKeys {
     const val mini_player_extended_controls = "mini_player_extended_controls"
     const val home_page_bottom_bar_label_visibility = "home_page_bottom_bar_label_visibility"
     const val require_audio_focus = "require_audio_focus"
+    const val ignore_audiofocus_loss = "ignore_audiofocus_loss"
 }
 
 data class SettingsData(
@@ -36,6 +37,7 @@ object SettingsDataDefaults {
     const val pauseOnHeadphonesDisconnect = false
     const val miniPlayerExtendedControls = false
     const val requireAudioFocus = true
+    const val ignoreAudioFocusLoss = false
     val homeTabs = setOf(
         HomePages.Songs,
         HomePages.Albums,
@@ -112,6 +114,12 @@ class SettingsManager(private val musicPlayer: MusicPlayer) {
         getSharedPreference().getBoolean(
             SettingsKeys.require_audio_focus,
             SettingsDataDefaults.requireAudioFocus
+        )
+
+    fun getIgnoreAudioFocusLoss() =
+        getSharedPreference().getBoolean(
+            SettingsKeys.ignore_audiofocus_loss,
+            SettingsDataDefaults.ignoreAudioFocusLoss
         )
 
     private fun getSharedPreference() =
