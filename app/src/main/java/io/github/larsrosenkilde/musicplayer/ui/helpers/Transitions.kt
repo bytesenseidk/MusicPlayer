@@ -21,7 +21,7 @@ sealed class TransitionDurations(val milliseconds: Int) {
         tween<T>(milliseconds, delayMillis, easing)
 }
 
-data class ScaleTransitions(val enterScale: Float, val exitScale: Float) {
+data class ScaleTransition(val enterScale: Float, val exitScale: Float) {
     fun enterTransition(
         animationSpec: FiniteAnimationSpec<Float> = defaultAnimationSpec()
     ) = scaleIn(animationSpec, enterScale) + fadeIn()
@@ -34,8 +34,8 @@ data class ScaleTransitions(val enterScale: Float, val exitScale: Float) {
         private const val ShrinkScale = 0.95f
         private const val ExpandScale = 1.05f
 
-        val scaleUp = ScaleTransitions(ShrinkScale, ExpandScale)
-        val scaleDown = ScaleTransitions(ExpandScale, ShrinkScale)
+        val scaleUp = ScaleTransition(ShrinkScale, ExpandScale)
+        val scaleDown = ScaleTransition(ExpandScale, ShrinkScale)
 
         private fun <T> defaultAnimationSpec() = TransitionDurations.Slow.asTween<T>()
     }

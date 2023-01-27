@@ -151,7 +151,7 @@ fun HomeView(context: ViewContext) {
                     .padding(contentPadding)
                     .fillMaxSize(),
                 transitionSpec = {
-                    SlideTransition.slideUp.enterTransition()
+                    SlideTransitions.slideUp.enterTransition()
                         .with(ScaleTransition.scaleDown.exitTransition())
                 },
             ) { page ->
