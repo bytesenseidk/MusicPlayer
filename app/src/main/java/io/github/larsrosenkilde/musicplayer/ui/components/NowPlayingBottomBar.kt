@@ -31,6 +31,7 @@ import io.github.larsrosenkilde.musicplayer.ui.helpers.Routes
 import io.github.larsrosenkilde.musicplayer.ui.helpers.ViewContext
 import io.github.larsrosenkilde.musicplayer.ui.helpers.navigate
 
+
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun NowPlayingBottomBar(context: ViewContext) {
@@ -87,6 +88,7 @@ fun NowPlayingBottomBar(context: ViewContext) {
                             .fillMaxHeight()
                     )
                 }
+
                 ElevatedCard(
                     modifier = Modifier
                         .fillMaxWidth()
