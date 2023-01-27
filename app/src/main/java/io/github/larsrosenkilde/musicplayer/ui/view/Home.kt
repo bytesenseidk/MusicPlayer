@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import io.github.larsrosenkilde.musicplayer.ui.helpers.*
 import io.github.larsrosenkilde.musicplayer.ui.view.home.*
 import io.github.larsrosenkilde.musicplayer.services.i18n.*
+import io.github.larsrosenkilde.musicplayer.ui.components.TopAppBarMinimalTitle
 
 enum class HomePages(
     val label: (context: ViewContext) -> String,
