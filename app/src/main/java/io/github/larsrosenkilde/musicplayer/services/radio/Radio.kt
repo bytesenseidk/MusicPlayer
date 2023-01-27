@@ -30,6 +30,7 @@ class Radio(private val mplayer: MusicPlayer): MusicHooks {
     private val focus = RadioFocus(mplayer)
 
     private var player: RadioPlayer? = null
+    private var notification = RadioNotification(mplayer)
     private var focusCounter = 0
 
     private val nativeReceiver = RadioNativeReceiver(mplayer)
@@ -42,7 +43,7 @@ class Radio(private val mplayer: MusicPlayer): MusicHooks {
 
     val onPlaybackPositionUpdate = Eventer<PlaybackPosition>()
 
-    /*
+
     init {
         nativeReceiver.start()
     }
@@ -52,7 +53,6 @@ class Radio(private val mplayer: MusicPlayer): MusicHooks {
         notification.destroy()
         nativeReceiver.destroy()
     }
-     */
 
     data class PlayOptions(
         val index: Int = 0,
@@ -126,6 +126,12 @@ class Radio(private val mplayer: MusicPlayer): MusicHooks {
                 onUpdate.dispatch(RadioEvents.PausePlaying)
             }
         }
+    }
+
+    fun stop(ended: Boolean = true) {
+        stopCurrentSong()
+        queue.reset()
+        if (ended) onUpdate.dispatch(RadioEvents.QueueEnded)
     }
 
     fun jumpTo(index: Int) = play(PlayOptions(index = index))

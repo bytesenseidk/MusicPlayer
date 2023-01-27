@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import io.github.larsrosenkilde.musicplayer.services.groove.Song
 import io.github.larsrosenkilde.musicplayer.services.radio.PlaybackPosition
 import io.github.larsrosenkilde.musicplayer.ui.helpers.Routes
 import io.github.larsrosenkilde.musicplayer.ui.helpers.ViewContext
@@ -39,7 +40,7 @@ fun NowPlayingBottomBar(context: ViewContext) {
     var isPlaying by remember { mutableStateOf(context.musicPlayer.radio.isPlaying) }
     val showMiniPlayerExtendedControls = context.musicPlayer.settings.getMiniPlayerExtendedControls()
 
-    EventEffect(context.musicPlayer.radio.onUpdate) {
+    EventerEffect(context.musicPlayer.radio.onUpdate) {
         currentPlayingSong = context.musicPlayer.radio.queue.currentPlayingSong
         isPlaying = context.musicPlayer.radio.isPlaying
     }
@@ -48,7 +49,10 @@ fun NowPlayingBottomBar(context: ViewContext) {
         visible = currentPlayingSong != null,
         enter = slideIn {
             IntOffset(0, it.height / 2)
-        } + fadeIn()
+        } + fadeIn(),
+        exit = slideOut {
+            IntOffset(0, it.height / 2)
+        } + fadeOut()
     ) {
         currentPlayingSong?.let { currentSong ->
             Column(
@@ -110,7 +114,7 @@ fun NowPlayingBottomBar(context: ViewContext) {
                         ) { song ->
                             BoxWithConstraints {
                                 val cardWidthPx = constraints.maxWidth
-                                val offsetX by remember { mutableStateOf(0f) }
+                                var offsetX by remember { mutableStateOf(0f) }
                                 val cardOffsetX = animateIntAsState(offsetX.toInt())
                                 val cardOpacity = animateFloatAsState(
                                     if (offsetX != 0f) 0.7f else 1f
@@ -122,13 +126,19 @@ fun NowPlayingBottomBar(context: ViewContext) {
                                             IntOffset(cardOffsetX.value.div(2), 0)
                                         }
                                         .pointerInput(Unit) {
-                                            detectHorizontalDragGestures (
+                                            detectHorizontalDragGestures(
                                                 onDragEnd = {
                                                     val thresh = cardWidthPx / 4
                                                     offsetX = when {
                                                         -offsetX > thresh -> {
-                                                            val changed = context.musicPlayer.radio.shorty.skip()
+                                                            val changed =
+                                                                context.musicPlayer.radio.shorty.skip()
                                                             if (changed) -cardWidthPx.toFloat() else 0f
+                                                        }
+                                                        offsetX > thresh -> {
+                                                            val changed =
+                                                                context.musicPlayer.radio.shorty.previous()
+                                                            if (changed) cardWidthPx.toFloat() else 0f
                                                         }
                                                         else -> 0f
                                                     }
@@ -141,12 +151,69 @@ fun NowPlayingBottomBar(context: ViewContext) {
                                                 }
                                             )
                                         }
-                                )
+                                    ) {
+                                    NowPlayingBottomBarContent(context = context, song = song)
+                                }
                             }
-
                         }
+                        Spacer(modifier = Modifier.width(15.dp))
+                        if (showMiniPlayerExtendedControls) {
+                            IconButton(
+                                onClick = { context.musicPlayer.radio.shorty.previous() }
+                            ) {
+                                Icon(Icons.Default.SkipPrevious, null)
+                            }
+                        }
+                        IconButton(
+                            onClick = { context.musicPlayer.radio.shorty.playPause() }
+                        ) {
+                            Icon(
+                                if (!isPlaying) Icons.Default.PlayArrow
+                                else Icons.Default.Pause,
+                                null
+                            )
+                        }
+                        if (showMiniPlayerExtendedControls) {
+                            IconButton(
+                                onClick = { context.musicPlayer.radio.shorty.skip() }
+                            ) {
+                                Icon(Icons.Default.SkipNext, null)
+                            }
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun NowPlayingBottomBarContent(context: ViewContext, song: Song) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Spacer(modifier = Modifier.width(12.dp))
+        AsyncImage(
+            song.createArtworkImageRequest(context.musicPlayer).build(),
+            null,
+            modifier = Modifier
+                .size(45.dp)
+                .clip(RoundedCornerShape(10.dp))
+        )
+        Spacer(modifier = Modifier.width(15.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                song.title,
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+            song.artistName?.let { artistName ->
+                Text(
+                    artistName,
+                    style = MaterialTheme.typography.bodySmall,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         }
     }
