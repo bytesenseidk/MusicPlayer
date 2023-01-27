@@ -23,7 +23,17 @@ class RadioNotficationManager(musicPlayer: MusicPlayer) {
     private val hasService: Boolean
         get() = state == State.READY && service != null
 
+    fun cancel() {
+        destroy()
+        RadioNotificationService.destroy()
+    }
 
+    private fun destroy() {
+        if (state == State.DESTROYED) return
+        state = State.DESTROYED
+        lastNotification = null
+        manager.cancel(RadioNotification.CHANNEL_ID, RadioNotification.NOTIFICATION_ID)
+    }
 }
 
 enum class RadioNotificationServiceEvents {

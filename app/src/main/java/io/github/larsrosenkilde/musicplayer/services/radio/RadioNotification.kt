@@ -19,13 +19,24 @@ class RadioNotification(private val musicPlayer: MusicPlayer) {
         androidx.media.app.NotificationCompat.MediaStyle()
             .setMediaSession(session.sessionToken)
     private var builder: NotificationCompat.Builder? = null
-    private var manager = RadioNotificationManager(musicPlayer)
+    private var manager = RadioNotficationManager(musicPlayer)
     private var receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             intent?.action?.let { action ->
                 handleAction(action)
             }
         }
+    }
+
+    fun destroy() {
+        cancel()
+        session.release()
+        musicPlayer.applicationContext.unregisterReceiver(receiver)
+    }
+
+    private fun cancel() {
+        session.isActive = false
+        manager.cancel()
     }
 
     private var usable = false
@@ -42,6 +53,8 @@ class RadioNotification(private val musicPlayer: MusicPlayer) {
 
 
     companion object {
+        const val CHANNEL_ID = "${R.string.app_name}_media_notification"
+        const val NOTIFICATION_ID = 69421
         const val MEDIA_SESSION_ID = "${R.string.app_name}_media_session"
 
         const val ACTION_PLAY_PAUSE = "${R.string.app_name}_play_pause"
