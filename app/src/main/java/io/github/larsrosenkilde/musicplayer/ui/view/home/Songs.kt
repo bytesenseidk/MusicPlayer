@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import io.github.larsrosenkilde.musicplayer.ui.components.IconTextBody
 import io.github.larsrosenkilde.musicplayer.ui.components.SongList
 import io.github.larsrosenkilde.musicplayer.ui.helpers.ViewContext
 import java.lang.reflect.Modifier
