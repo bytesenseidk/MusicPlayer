@@ -10,4 +10,5 @@ class English : Translations {
     override val albumArtists = "Album artists"
     override val genres = "Genres"
     override val playlists = "Playlists"
+    override val damnThisIsSoEmpty = "Damn, this is so empty!"
 }
