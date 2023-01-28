@@ -1,6 +1,8 @@
 package io.github.larsrosenkilde.musicplayer.services.radio
 
 import io.github.larsrosenkilde.musicplayer.MusicPlayer
+import io.github.larsrosenkilde.musicplayer.services.groove.Song
+import kotlin.random.Random
 
 class RadioShorty(private val musicPlayer: MusicPlayer) {
     fun playPause() {
@@ -39,4 +41,34 @@ class RadioShorty(private val musicPlayer: MusicPlayer) {
             }
         }
     }
+
+    fun playQueue(
+        songIds: List<Long>,
+        options: Radio.PlayOptions = Radio.PlayOptions(),
+        shuffle: Boolean = false
+    ) {
+        musicPlayer.radio.stop(ended = false)
+        musicPlayer.radio.queue.add(
+            songIds,
+            options = options.run {
+                copy(index = if (shuffle) Random.nextInt(songIds.size) else options.index)
+            }
+        )
+        if (shuffle) {
+            musicPlayer.radio.queue.setShuffleMode(true)
+        }
+    }
+
+    @JvmName("PlayQueueFromSongList")
+    fun playQueue(
+        songs: List<Song>,
+        options: Radio.PlayOptions = Radio.PlayOptions(),
+        shuffle: Boolean = false
+    ) = playQueue(
+        songIds = songs.map { it.id },
+        options = options,
+        shuffle = shuffle
+    )
+
+    fun playQueue(song: Song, shuffle: Boolean = false) = playQueue(listOf(song), shuffle = shuffle)
 }

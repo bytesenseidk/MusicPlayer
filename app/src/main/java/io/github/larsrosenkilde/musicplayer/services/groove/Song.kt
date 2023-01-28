@@ -69,7 +69,7 @@ data class Song(
         }
     }
 
-    val fileName = Path(path).fileName.toString()
+    val filename = Path(path).fileName.toString()
     val uri: Uri get() = buildUri(id)
 
     fun createArtworkImageRequest(musicPlayer: MusicPlayer) =
