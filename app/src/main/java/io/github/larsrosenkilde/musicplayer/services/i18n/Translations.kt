@@ -33,6 +33,8 @@ interface Translations {
     val size: String
     val dateAdded: String
     val lastModified: String
+    val title: String
+    val album: String
 
     fun XSongs(x: Int): String
     fun XKbps(x: Int): String
