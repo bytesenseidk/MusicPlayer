@@ -8,6 +8,12 @@ import io.github.larsrosenkilde.musicplayer.ui.helpers.createHandyImageRequest
 import io.github.larsrosenkilde.musicplayer.utils.*
 import java.util.concurrent.ConcurrentHashMap
 
+enum class AlbumSortBy {
+    ALBUM_NAME,
+    ARTIST_NAME,
+    TRACKS_COUNT
+}
+
 class AlbumRepository(private val musicPlayer: MusicPlayer) {
     private val cached = ConcurrentHashMap<Long, Album>()
     var isUpdating = false

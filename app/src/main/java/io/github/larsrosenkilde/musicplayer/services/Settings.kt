@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import io.github.larsrosenkilde.musicplayer.MusicPlayer
+import io.github.larsrosenkilde.musicplayer.services.groove.AlbumSortBy
 import io.github.larsrosenkilde.musicplayer.services.groove.SongSortBy
 import io.github.larsrosenkilde.musicplayer.ui.view.HomePageBottomBarLabelVisibility
 import io.github.larsrosenkilde.musicplayer.ui.view.HomePages
@@ -13,6 +14,8 @@ object SettingsKeys {
     const val identifier = "settings"
     const val lastUsedSongsSortBy = "last_used_song_sort_by"
     const val lastUsedSongsSortReverse = "last_used_song_sort_reverse"
+    const val lastUsedAlbumsSortBy = "last_used_albums_sort_by"
+    const val lastUsedAlbumsSortReverse = "last_used_albums_sort_reverse"
     const val fade_playback = "fade_playback"
     const val fade_playback_duration = "fade_playback_duration"
     const val play_on_headphones_connect = "play_on_headphones_connect"
@@ -120,6 +123,16 @@ class SettingsManager(private val musicPlayer: MusicPlayer) {
             putBoolean(SettingsKeys.lastUsedSongsSortReverse, reverse)
         }
         onChange.dispatch(SettingsKeys.lastUsedSongsSortReverse)
+    }
+
+    fun getLastUsedAlbumsSortBy() =
+        getSharedPreference().getEnum<AlbumSortBy>(SettingsKeys.lastUsedAlbumsSortBy, null)
+
+    fun setLastUsedAlbumsSortBy(sortBy: SongSortBy) {
+        getSharedPreference().edit {
+            putEnum(SettingsKeys.lastUsedAlbumsSortBy, sortBy)
+        }
+        onChange.dispatch(SettingsKeys.lastUsedAlbumsSortBy)
     }
 
     fun getHomeLastTab() =

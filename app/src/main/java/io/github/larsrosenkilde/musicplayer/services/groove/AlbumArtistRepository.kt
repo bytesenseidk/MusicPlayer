@@ -2,6 +2,7 @@ package io.github.larsrosenkilde.musicplayer.services.groove
 
 import io.github.larsrosenkilde.musicplayer.MusicPlayer
 import io.github.larsrosenkilde.musicplayer.utils.Eventer
+import io.github.larsrosenkilde.musicplayer.utils.subListNonStrict
 
 class AlbumArtistRepository(private val musicPlayer: MusicPlayer) {
     var isUpdating = false
