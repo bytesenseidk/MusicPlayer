@@ -44,3 +44,26 @@ class GrooveManager(private val musicPlayer: MusicPlayer): MusicHooks {
         }
     }
 }
+
+class GrooveRepositoryUpdateDispatcher(
+    val macCount: Int = 30,
+    val minTimeDiff: Int = 200,
+    val dispatch: () -> Unit
+) {
+    var count = 0
+    var time = currentTime
+
+    fun increment() {
+        if (count > macCount && (currentTime - time) > minTimeDiff) {
+            dispatch()
+            count = 0
+            time = System.currentTimeMillis()
+            return
+        }
+        count++
+    }
+
+    companion object {
+        private val currentTime: Long get() = System.currentTimeMillis()
+    }
+}

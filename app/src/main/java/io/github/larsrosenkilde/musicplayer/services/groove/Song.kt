@@ -69,10 +69,11 @@ data class Song(
         }
     }
 
-    val fileName = Path(path).fileName.toString()
+    val filename = Path(path).fileName.toString()
     val uri: Uri get() = buildUri(id)
 
-    /* Song Image / Album Cover */
+    fun createArtworkImageRequest(musicPlayer: MusicPlayer) =
+        musicPlayer.groove.album.createAlbumArtworkImageRequest(albumId)
 
     companion object {
         fun buildUri(id: Long): Uri =
