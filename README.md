@@ -5,7 +5,7 @@ A simple music player in Kotlin.
 Kotlin project aimed for me to learn Kotlin & Jetpack Compose
 
 # Authors
-[LarsRosenkilde](https://github.com/LarsRosenkilde)
+[Byte Sensei](https://github.com/bytesenseidk)
 
 # Version History
 - 0.1:
